@@ -1,7 +1,23 @@
 # movr_ws
 > ROS workspace for movr
 
-# Table of contents
+## Table of contents
+
+- [Workspace packages](#workspace-packages)
+- [Dependencies](#dependencies)
+  - [ROS](#ros)
+  - [Python](#python)
+- [How to use](#how-to-use)
+- [Development](#development)
+- [References](#references)
+
+## Workspace packages
+
+### movr_teleop
+Package that contains scripts to teleoperate via joystick, keyboard and speech
+
+### movr_vision
+Package that contains scripts related to vision sensors.
 
 ## Dependencies
 
