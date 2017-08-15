@@ -7,6 +7,7 @@
 - [Dependencies](#dependencies)
   - [ROS](#ros)
   - [Python](#python)
+- [Installation](#installation)
 - [How to use](#how-to-use)
 - [Development](#development)
 - [References](#references)
@@ -104,6 +105,27 @@ $ pip install pygame
 # JSON library
 $ pip install json
 ```
+
+## Installation
+
+```
+# Go to top-level worspace directory
+$ cd movr_ws/
+```
+
+```
+# Make workspace
+$ catkin_make
+# This generates the 'build' and 'devel' directories
+# The 'devel' directory has the setup directories and setup files
+```
+
+```
+# Source the workspace
+$ cd movr_ws/
+$ source devel/setup.bash
+```
+
 ## How to use
 ```
 # Run roscore
