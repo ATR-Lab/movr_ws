@@ -1,5 +1,5 @@
-# movr_ws
-> ROS workspace for movr
+# MOVR ROS Workspace
+> MOVR - Autonomous vehicle for close proximity navigation
 
 ## Table of contents
 
@@ -167,3 +167,7 @@ $ rosrun rviz rviz
 ## Development
 
 ## References
+- [ROS Ackermann Interest Group](http://wiki.ros.org/Ackermann%20Group)
+- [ROS Joy](http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick)
+- [ROS Openni Launch](http://wiki.ros.org/openni_launch/Tutorials/QuickStart)
+- [ROS Time Elastic Band Planning](http://wiki.ros.org/teb_local_planner/Tutorials/Planning%20for%20car-like%20robots)
