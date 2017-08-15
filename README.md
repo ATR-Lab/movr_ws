@@ -30,6 +30,11 @@ $ sudo apt install ros-kinetic-rosserial-arduino
 ```
 
 ```
+# ackermann-msgs
+$ sudo apt install ros-kinetic-ackermann-msgs
+```
+
+```
 # Joy
 $ sudo apt install ros-kinetic-joy
 
