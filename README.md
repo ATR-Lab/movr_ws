@@ -67,6 +67,8 @@ $ pip install gTTS
 # pocketsphinx-python
 # CMU speech recognition
 # https://github.com/cmusphinx/pocketsphinx-python
+# sudo apt install swig
+# sudo apt-get install python python-all-dev python-pip build-essential swig git libpulse-dev
 $ pip install pocketsphinx
 ```
 
