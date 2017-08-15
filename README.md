@@ -28,6 +28,7 @@ Package that contains scripts related to vision sensors.
 # rosserial
 $ sudo apt install ros-kinetic-rosserial
 $ sudo apt install ros-kinetic-rosserial-arduino 
+$ sudo apt install ros-kinetic-rosserial-python
 ```
 
 ```
