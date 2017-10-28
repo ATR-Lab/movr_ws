@@ -140,7 +140,7 @@ $ source devel/setup.bash
 
 ## How to use
 
-### In workstation
+### In Workstation
 ```
 # Run roscore
 $ roscore
@@ -155,7 +155,7 @@ $ rosrun joy joy_node
 # Run movr joy node
 $ rosrun movr_teleop_joy joyjoy.py
 ```
-### In MOVR vehicle
+### In MOVR Vehicle
 ```
 # Run Python rosserial node
 $ rosrun rosserial_python serial_node.py /dev/ttyACM1   # Check device name 'ls -la /dev'
@@ -165,8 +165,17 @@ $ rosrun rosserial_python serial_node.py /dev/ttyACM1   # Check device name 'ls 
 # Run voice interface
 $ rosrun movr_voice hello_movr.py
 ```
+### View Astra Camera
+```
+# View RGB image
+$ rosrun image_view image_view image:=/camera/rgb/image_raw
+```
 
-### View Kinect sensor
+```
+# View Depth image
+$ rosrun image_view image_view image:=/camera/depth/image
+```
+### View Kinect Sensor
 
 ```
 # Launch openni
@@ -188,7 +197,7 @@ $ rosrun image_view image_view image:=/camera/depth/image
 # View depth-disparity
 $ rosrun image_view disparity_view image:=/camera/depth/disparity
 ```
-
+#### In RViz
 ```
 # To view RGB - depth correlated images, execute the following
 # 1. Remap Depth and Correlate with RGB
