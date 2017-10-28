@@ -116,14 +116,16 @@ $ cd movr_ws/
 
 ```
 # Make workspace
-$ catkin_make
 # This generates the 'build' and 'devel' directories
 # The 'devel' directory has the setup directories and setup files
+$ catkin_make
 ```
 
 ```
+# Go into 'movr_ws' directory
+$ cd movr_ws/ 
+
 # Source the workspace
-$ cd movr_ws/
 $ source devel/setup.bash
 ```
 
