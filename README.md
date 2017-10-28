@@ -139,14 +139,11 @@ $ source devel/setup.bash
 ```
 
 ## How to use
+
+### In workstation
 ```
 # Run roscore
 $ roscore
-```
-
-```
-# Run Python rosserial node
-$ rosrun rosserial_python serial_node.py /dev/ttyACM1   # Check device name 'ls -la /dev'
 ```
 
 ```
@@ -157,6 +154,11 @@ $ rosrun joy joy_node
 ```
 # Run movr joy node
 $ rosrun movr_teleop_joy joyjoy.py
+```
+### In MOVR vehicle
+```
+# Run Python rosserial node
+$ rosrun rosserial_python serial_node.py /dev/ttyACM1   # Check device name 'ls -la /dev'
 ```
 
 ```
