@@ -70,6 +70,7 @@ find_package(OpenCV REQUIRED)
 $ sudo apt install ros-kinetic-astra-camera
 $ sudo apt install ros-kinetic-astra-launch
 ```
+Follow configuration instructions outlined [here](http://wiki.ros.org/astra_camera).
 
 ### Python
 #### API AI
