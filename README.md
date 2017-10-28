@@ -42,7 +42,7 @@ $ sudo apt install ros-kinetic-joy
 
 # Set permission to make accessible to ROS
 $ ls -l /dev/input/jsX              # X is the joystick number
-$ sudo chmod a+rw /dev/inputjsX
+$ sudo chmod a+rw /dev/input/jsX
 ```
 
 ```
