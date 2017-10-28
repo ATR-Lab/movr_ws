@@ -22,20 +22,21 @@ Package that contains scripts related to vision sensors.
 
 ## Dependencies
 
-### ROS
-
+### ROS 
+#### rosserial
 ```
 # rosserial
 $ sudo apt install ros-kinetic-rosserial
 $ sudo apt install ros-kinetic-rosserial-arduino 
 $ sudo apt install ros-kinetic-rosserial-python
 ```
-
+### ackermann-msgs
 ```
 # ackermann-msgs
 $ sudo apt install ros-kinetic-ackermann-msgs
 ```
 
+#### joy
 ```
 # Joy
 $ sudo apt install ros-kinetic-joy
@@ -44,17 +45,17 @@ $ sudo apt install ros-kinetic-joy
 $ ls -l /dev/input/jsX              # X is the joystick number
 $ sudo chmod a+rw /dev/input/jsX
 ```
-
+#### openni
 ```
 # Openni - Kinect
 $ sudo apt install ros-kinetic-openni-launch
 ```
-
+#### opencv 3
 ```
 # Kinect OpenCV 3
 $ sudo apt install ros-kinetic-opencv3
 ```
-
+#### cv-bridge
 ```
 # CV-Bridge
 $ sudo apt install ros-kinetic-cv-bridge
@@ -63,29 +64,36 @@ find_package(OpenCV REQUIRED)
 # Do not use find_package(catkin ... but add another statement find_package(OpenCV REQUIRED)
 ```
 
-### Python
+#### astra
+```
+# Install Orbbec Astra camera dependencies
+$ sudo apt install ros-kinetic-astra-camera
+$ sudo apt install ros-kinetic-astra-launch
+```
 
+### Python
+#### API AI
 ```
 # API.AI
 # Chat bot API
 # https://github.com/api-ai/apiai-python-client
 $ pip install apiai
 ```
-
+#### SpeechRecognition
 ```
 # SpeechRecognition
 # Google speech recognition API wrapper
 # https://pypi.python.org/pypi/SpeechRecognition/
 $ pip install SpeechRecognition
 ```
-
+#### gTTS
 ```
 # gTTS 1.2.1
 # Google text-to-speech API wrapper
 # https://pypi.python.org/pypi/gTTS/1.2.1
 $ pip install gTTS
 ```
-
+#### pocketsphinx-python
 ```
 # pocketsphinx-python
 # CMU speech recognition
@@ -93,14 +101,14 @@ $ pip install gTTS
 # sudo apt-get install python python-all-dev python-pip build-essential swig git libpulse-dev
 $ pip install pocketsphinx
 ```
-
+#### pygame
 ```
 # pygame
 # Game engine. Required to use audio library
 # https://www.pygame.org/wiki/GettingStarted
 $ pip install pygame
 ```
-
+#### json
 ```
 # json
 # JSON library
