@@ -167,6 +167,11 @@ $ rosrun movr_voice hello_movr.py
 ```
 ### View Astra Camera
 ```
+# Launch Astra camera node
+$ roslaunch astra_launch astra.launch
+```
+
+```
 # View RGB image
 $ rosrun image_view image_view image:=/camera/rgb/image_raw
 ```
