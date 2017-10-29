@@ -153,7 +153,7 @@ $ rosrun joy joy_node
 
 ```
 # Run movr joy node
-$ rosrun movr_teleop_joy joyjoy.py
+$ rosrun movr_teleop joyjoy.py
 ```
 ### In MOVR Vehicle
 ```
