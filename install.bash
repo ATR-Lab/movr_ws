@@ -27,13 +27,13 @@ fi
 # Add ROSSERIAL deps
 ##################################################################
 echo -e "${BYELLOW}[INFO] ${YELLOW}Installing rosserial dependencies${NC}"
-sudo apt install ros-melodic-rosserial
-sudo apt install ros-melodic-rosserial-arduino
-sudo apt install ros-melodic-rosserial-msgs
-sudo apt install ros-melodic-rosserial-python
+apt install ros-melodic-rosserial
+apt install ros-melodic-rosserial-arduino
+apt install ros-melodic-rosserial-msgs
+apt install ros-melodic-rosserial-python
 
 # Add Teleop deps
 #################################################################
 echo -e "${BYELLOW}[INFO] ${YELLOW}Installing teleop-twist dependencies${NC}"
-sudo apt install ros-melodic-teleop-twist-joy
-sudo apt install ros-melodic-teleop-twist-keyboard
+apt install ros-melodic-teleop-twist-joy
+apt install ros-melodic-teleop-twist-keyboard
