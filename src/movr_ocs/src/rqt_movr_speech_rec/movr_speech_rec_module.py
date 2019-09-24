@@ -3,14 +3,36 @@ import rospy
 import rospkg
 
 from qt_gui.plugin import Plugin
+from QtCore import QThread
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QWidget, QMessageBox, QDialog
 from python_qt_binding.QtCore import Qt, QTimer, Slot, QBasicTimer, Signal
 from python_qt_binding.QtGui import QPixmap
 
+import time
+
+# https://medium.com/@webmamoffice/getting-started-gui-s-with-python-pyqt-qthread-class-1b796203c18c
+class SpeechRecognitionThread(QThread):
+    # rec_done_sig = Signal([bool, str])
+    rec_done_sig = Signal([str])
+    def __init__(self, parent=None):
+        QThread.__init__(self, parent)
+        self._is_rec_btn_pressed = False
+
+    def on_rec_btn_press(self, state):
+        self._is_rec_btn_pressed = state
+
+    def run(self):
+        self.running = True
+        while self.running:
+            time.sleep(1)
+                    
+        self.rec_done_sig.emit("DONE RECORDING...")
+
+
 class MOVRSpeechRecPlugin(Plugin):
 
-    btn_rec_state_changed = Signal([bool])
+    btn_rec_state_changed_sig = Signal([bool])
 
     def __init__(self, context):
         super(MOVRSpeechRecPlugin, self).__init__(context)
@@ -37,6 +59,7 @@ class MOVRSpeechRecPlugin(Plugin):
         # Give QObjects reasonable names
         self._widget.setObjectName('MOVRSpeechRecPlugin')
 
+
         if context.serial_number() > 1:
             self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
         # Add widget to the user interface
@@ -45,7 +68,7 @@ class MOVRSpeechRecPlugin(Plugin):
 
         self.btn_clicked = False
         # Add Event Handler
-        self.btn_rec_state_changed.connect(self.on_btn_state_changed)
+        # self.btn_rec_state_changed_sig.connect(self.on_btn_state_changed)
         self._widget.btn_record.clicked.connect(self.on_btn_rec_clicked)
 
         self._white_string  = "background-color: rgb(255,255,255); color: #000;"
@@ -57,11 +80,50 @@ class MOVRSpeechRecPlugin(Plugin):
         self._grey_string   = "background-color: rgb(160,160,160); color: #606060"
 
     def on_btn_rec_clicked(self):
-        self.btn_rec_state_changed.emit(self.btn_clicked)
-        self.btn_clicked = not self.btn_clicked
 
-    def on_btn_state_changed(self, state):
-        if state == True:
+        if not self.btn_clicked:
+            self.btn_clicked = True
+            # Launch SpeechRecognition Thread
+            self.rec_thread = SpeechRecognitionThread()
+            # Connect (this) signal to a function in the thread
+            self.btn_rec_state_changed_sig.connect(self.rec_thread.on_rec_btn_press)
+            # Tell the thread that we have clicked something (set the state)
+            self.btn_rec_state_changed_sig.emit(self.btn_clicked)
+            # Start thread
+            self.rec_thread.start()
+
+            # Connect thread's signal to a function in (this) class
+            self.rec_thread.rec_done_sig.connect(self.update_rec_info)
+            # Change button's color
             self._widget.btn_record.setStyleSheet(self._green_string)
+            self._widget.text_logs.setPlainText("RECORDING")
+
         else:
+            self.rec_thread.running = False
+            # self.but1.setEnabled(True)           
             self._widget.btn_record.setStyleSheet(self._red_string)
+            self.btn_clicked = False     
+            self._widget.text_logs.setPlainText("STOPPING RECORDING...")
+
+            # self.btn_rec_state_changed.emit(self.btn_clicked)
+            # self.btn_clicked = not self.btn_clicked
+
+    def update_rec_info(self, str):
+        '''
+        Function used by thread when it is done runnning
+        '''
+        self._widget.text_logs.setPlainText(str)
+        rospy.loginfo(str)
+        rospy.loginfo("DONE!!!")
+
+    # def update_button_state(self, state):
+    #     if state == True:
+    #         self._widget.btn_record.setStyleSheet(self._green_string)
+    #     else:
+    #         self._widget.btn_record.setStyleSheet(self._red_string)        
+
+    # def on_btn_state_changed(self, state):
+    #     if state == True:
+    #         self._widget.btn_record.setStyleSheet(self._green_string)
+    #     else:
+    #         self._widget.btn_record.setStyleSheet(self._red_string)
