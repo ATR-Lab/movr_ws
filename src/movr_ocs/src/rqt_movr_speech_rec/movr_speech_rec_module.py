@@ -10,6 +10,8 @@ from python_qt_binding.QtGui import QPixmap
 
 class MOVRSpeechRecPlugin(Plugin):
 
+    btn_rec_state_changed = Signal([bool])
+
     def __init__(self, context):
         super(MOVRSpeechRecPlugin, self).__init__(context)
         self.setObjectName('MOVRSpeechRecPlugin')
@@ -39,3 +41,27 @@ class MOVRSpeechRecPlugin(Plugin):
             self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
         # Add widget to the user interface
         context.add_widget(self._widget)
+
+
+        self.btn_clicked = False
+        # Add Event Handler
+        self.btn_rec_state_changed.connect(self.on_btn_state_changed)
+        self._widget.btn_record.clicked.connect(self.on_btn_rec_clicked)
+
+        self._white_string  = "background-color: rgb(255,255,255); color: #000;"
+        self._red_string    = "background-color: rgb(255,0,0); color: #FFF;"
+        self._orange_string = "background-color: rgb(255,128,0)"
+        self._yellow_string = "background-color: rgb(255,255,0)"
+        self._green_string  = "background-color: rgb(128,255,0)"
+        self._black_string  = "background-color: rgb(0,0,0)"
+        self._grey_string   = "background-color: rgb(160,160,160); color: #606060"
+
+    def on_btn_rec_clicked(self):
+        self.btn_rec_state_changed.emit(self.btn_clicked)
+        self.btn_clicked = not self.btn_clicked
+
+    def on_btn_state_changed(self, state):
+        if state == True:
+            self._widget.btn_record.setStyleSheet(self._green_string)
+        else:
+            self._widget.btn_record.setStyleSheet(self._red_string)
