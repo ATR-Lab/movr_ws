@@ -11,6 +11,22 @@ from python_qt_binding.QtGui import QPixmap
 
 import time
 
+import argparse
+import tempfile
+from multiprocessing import Queue as queue
+import sys
+from gtts import gTTS
+from playsound import playsound
+import speech_recognition as sr
+import time
+from os import path
+import keyboard
+
+import sounddevice as sd
+import soundfile as sf
+import numpy
+assert numpy
+
 # https://medium.com/@webmamoffice/getting-started-gui-s-with-python-pyqt-qthread-class-1b796203c18c
 class SpeechRecognitionThread(QThread):
     # rec_done_sig = Signal([bool, str])
@@ -18,17 +34,52 @@ class SpeechRecognitionThread(QThread):
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
         self._is_rec_btn_pressed = False
+        self.q = queue()
+        self.robo = {}
 
     def on_rec_btn_press(self, state):
         self._is_rec_btn_pressed = state
 
+    def callback(self, indata, frames, time, status):
+        # print(status, file=sys.stderr)
+        # if status:
+            # print(status, file=sys.stderr)
+        self.q.put(indata.copy())
+
     def run(self):
         self.running = True
-        while self.running:
-            time.sleep(1)
-                    
-        self.rec_done_sig.emit("DONE RECORDING...")
+        # while self.running:
+        #    time.sleep(1)
+        device_info = sd.query_devices(None, 'input')
+        filename = tempfile.mktemp(prefix='Human_',suffix='.wav', dir='/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec')
+        samplerate = int(device_info['default_samplerate'])
 
+        with sf.SoundFile(filename, mode='x', samplerate=samplerate,
+                    channels=1, subtype="PCM_24") as file:
+            with sd.InputStream(samplerate=samplerate, device=None,
+                                channels=1, callback=self.callback):       
+                while self.running:
+                    file.write(self.q.get())            
+        # self.rec_done_sig.emit("DONE RECORDING...")
+        self.rec_done_sig.emit("DONE RECORDING...")
+        print('\nRecording finished: ' + repr(filename))
+        AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), filename)
+        r = sr.Recognizer()
+        with sr.AudioFile(AUDIO_FILE) as source:
+            audio = r.record(source)
+        text = r.recognize_google(audio)
+        print(text)
+        tts = gTTS(text, 'en')
+        text = text.replace(" ", "_")
+        robotFile = text + '.mp3'
+        if not os.path.exists('/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec' + robotFile):
+            print('Saving new phrase...')
+            tts.save('/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec' + robotFile)
+            if robotFile not in self.robo:
+                self.robo[robotFile] = robotFile
+        playsound('/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec' + robotFile)
+        robotFile = ''
+        self.rec_done_sig.emit("DONE RECORDING...")
 
 class MOVRSpeechRecPlugin(Plugin):
 
