@@ -3,9 +3,9 @@
     http://wiki.ros.org/rqt/Tutorials/Create%20your%20new%20rqt%20plugin
 -->
 <library path="src">
-  <class name="MOVROCSPlugin" type="rqt_tbot_arms.tbot_arms_module.TBotArmsPlugin" base_class_type="rqt_gui_py::Plugin">
+  <class name="MOVROCSPlugin" type="rqt_movr_speech_rec.movr_speech_rec_module.MOVRSpeechRecPlugin" base_class_type="rqt_gui_py::Plugin">
     <description>
-      A GUI plugin for the mux.
+      MOVR Speech Record Plugin
     </description>
     <qtgui>
       <!-- optional grouping...
@@ -16,7 +16,7 @@
         <label>Subgroup</label>
       </group>
       -->
-      <label>OCU: Arms Controller</label>
+      <label>MOVR:OCS Speech Record</label>
       <icon type="theme">system-help</icon>
       <statustip>Sets controller message priority.</statustip>
     </qtgui>

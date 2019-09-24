@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="movr_ocs" type="rqt_movr_speech_rec" name="rqt_movr_speech_plugin"/>
+</launch>
