@@ -31,6 +31,7 @@ assert numpy
 class SpeechRecognitionThread(QThread):
     # rec_done_sig = Signal([bool, str])
     rec_done_sig = Signal([str])
+    sr_done_sig = Signal([str])
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
         self._is_rec_btn_pressed = False
@@ -47,6 +48,7 @@ class SpeechRecognitionThread(QThread):
         self.q.put(indata.copy())
 
     def run(self):
+        # text_transcribed_text
         self.running = True
         # while self.running:
         #    time.sleep(1)
@@ -68,12 +70,11 @@ class SpeechRecognitionThread(QThread):
         with sr.AudioFile(AUDIO_FILE) as source:
             audio = r.record(source)
         text = r.recognize_google(audio)
-        print(text)
+        self.sr_done_sig.emit(text)
         tts = gTTS(text, 'en')
         text = text.replace(" ", "_")
         robotFile = text + '.mp3'
         if not os.path.exists('/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec' + robotFile):
-            print('Saving new phrase...')
             tts.save('/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec' + robotFile)
             if robotFile not in self.robo:
                 self.robo[robotFile] = robotFile
@@ -155,6 +156,7 @@ class MOVRSpeechRecPlugin(Plugin):
             self._widget.btn_record.setStyleSheet(self._red_string)
             self.btn_clicked = False     
             self._widget.text_logs.setPlainText("STOPPING RECORDING...")
+            self.rec_thread.sr_done_sig.connect(self.update_sr_output)
 
             # self.btn_rec_state_changed.emit(self.btn_clicked)
             # self.btn_clicked = not self.btn_clicked
@@ -166,6 +168,11 @@ class MOVRSpeechRecPlugin(Plugin):
         self._widget.text_logs.setPlainText(str)
         rospy.loginfo(str)
         rospy.loginfo("DONE!!!")
+    
+    def update_sr_output(self, str):
+        self._widget.text_transcribed_text.setPlainText(str)
+        rospy.loginfo(str)
+        rospy.loginfo("Updated SR Output.")
 
     # def update_button_state(self, state):
     #     if state == True:
