@@ -163,6 +163,27 @@ color: white;</string>
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Logs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
+        <widget class="QPushButton" name="btn_clear">
+         <property name="geometry">
+          <rect>
+           <x>90</x>
+           <y>260</y>
+           <width>91</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 white, stop: 1 blue);
+border-style: solid;
+border-color: black;
+border-width: 5px;
+border-radius: 10px;
+color: white;</string>
+         </property>
+         <property name="text">
+          <string>CLEAR</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QGroupBox" name="predefined_responses_group">
         <property name="geometry">
