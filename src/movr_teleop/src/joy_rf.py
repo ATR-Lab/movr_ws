@@ -4,12 +4,7 @@ from sensor_msgs.msg import Joy
 from ackermann_msgs.msg import AckermannDrive
 import serial
 import time
-
-port = '/dev/ttyUSB0'
-if rospy.get_param("~port"):
-    port = rospy.get_param("~port")
-
-ser = serial.Serial(port, 115200, timeout=.1)
+import sys
 
 # ########################################
 # RUN INSTRUCTIONS:
@@ -59,24 +54,35 @@ def joy_cb(msg):
 	left_joy_v 		= msg.axes[1]
 
 	steering_angle 	= transformAnalogToSteerAngle(left_joy_h, -1, 1, -45, 45)
-    
-    if btn_a > 0:
-        speed = 80.0
-	elif btn_x > 0:
-        speed = 150.0
-	else:
-        speed = 120.0
 
-    # ser.write(b'<')
-    cmd = "<" + steering_angle + "," + speed  + ">"
+	if btn_a > 0:
+		speed = 80.0
+	elif btn_x > 0:
+		speed = 150.0
+	else:
+		speed = 120.0
+
+	# ser.write(b'<')
+	cmd = "<c" + str(steering_angle) + " " + str(speed)  + ">"
 	# ser.write(b'<c 100, 120>')
 	# ser.write(b'<m Do you need a ride?>')
-    ser.write(cmd.encode('utf-8')
+	ser.write(cmd.encode('utf-8'))
 
 def transformAnalogToSteerAngle(x, in_min, in_max, out_min, out_max):
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
 if __name__ == "__main__":
+	
+	args = rospy.myargv(argv=sys.argv)
+	if len(args) != 2:
+		port = '/dev/ttyUSB0'
+	else:
+		port = args[1]
+	# rospy.get_param("~port"):
+	# 	port = rospy.get_param("~port")
+
+	ser = serial.Serial(port, 115200, timeout=.1)
+
 	rospy.init_node('movr_teleop_joy_pub')
 	# pub = rospy.Publisher('movr_cmd', AckermannDrive)
 	sub = rospy.Subscriber("joy", Joy, joy_cb)
