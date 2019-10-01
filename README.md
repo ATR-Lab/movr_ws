@@ -128,6 +128,14 @@ $ pip install playsound
 # pip install sounddevice
 ```
 
+#### soundfile
+```
+# soundfile
+# SoundFile is an audio library based on libsndfile, CFFI and NumPy
+# https://pypi.org/project/SoundFile/
+# pip install soundfile
+```
+
 #### keyboard
 ```
 # keyboard
