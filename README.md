@@ -109,6 +109,15 @@ $ pip install pocketsphinx
 # https://www.pygame.org/wiki/GettingStarted
 $ pip install pygame
 ```
+
+#### playsound
+```
+# playsound
+# Pure Python, cross platform, single function module with no dependencies for playing sounds.
+# https://pypi.org/project/playsound/
+$ pip install playsound
+```
+
 #### json
 ```
 # json
