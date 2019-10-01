@@ -1,5 +1,5 @@
 <launch>
-  <group name="movr_core_all">
+  <group>
     <include file="$(find movr_core)/launch/speak.launch" />
     <include file="$(find movr_core)/launch/movr_drive.launch" />
     <include file="$(find movr_core)/launch/movr_rf_receive.launch" />
