@@ -26,6 +26,11 @@ import soundfile as sf
 import numpy
 assert numpy
 
+# get an instance of RosPack with the default search paths
+rospack = rospkg.RosPack()
+# get the file path for movr_ocs
+movr_ocs_pkg = rospack.get_path('movr_ocs')
+
 # https://medium.com/@webmamoffice/getting-started-gui-s-with-python-pyqt-qthread-class-1b796203c18c
 class SpeechRecognitionThread(QThread):
     rec_done_sig = Signal([str])
@@ -44,9 +49,15 @@ class SpeechRecognitionThread(QThread):
 
     def run(self):
         self.running = True
-        path = "/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec/"
+        # path = "/home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec/"
+        human_files_path = movr_ocs_pkg + '/recordings/human_files'
+
+        if not os.path.exists(human_files_path):
+            rospy.loginfo('Temp speech recording directory does not exist. Creating directory.')
+            os.makedirs(human_files_path)
+
         device_info = sd.query_devices(None, 'input')
-        filename = tempfile.mktemp(prefix='Human_', suffix='.wav', dir= path + 'human_files')
+        filename = tempfile.mktemp(prefix='Human_', suffix='.wav', dir= human_files_path)
         samplerate = int(device_info['default_samplerate'])
 
         with sf.SoundFile(filename, mode='x', samplerate=samplerate,channels=1, subtype="PCM_24") as file:
@@ -64,13 +75,20 @@ class SpeechRecognitionThread(QThread):
         tts = gTTS(transcribed_text, 'en')
         transcribed_text = transcribed_text.replace(" ", "_")
         robotFile = transcribed_text + '.mp3'
-        if not os.path.exists(path + 'robot_files/' + robotFile):
+
+        robot_files_path = movr_ocs_pkg + '/recordings/robot_files/'
+
+        if not os.path.exists(robot_files_path):
+            rospy.loginfo('Robot speech recording directory does not exist. Creating directory.')
+            os.makedirs(robot_files_path)
+
+        if not os.path.exists(robot_files_path + robotFile):
             self.rec_done_sig.emit("SAVING NEW RECORDING...")
-            tts.save(path + 'robot_files/' + robotFile)
+            tts.save(robot_files_path + robotFile)
             if robotFile not in self.robo:
                 self.robo[robotFile] = robotFile
         self.rec_done_sig.emit("PLAYING TTS FILE...")
-        playsound(path + 'robot_files/' + robotFile)
+        playsound(robot_files_path + robotFile)
         robotFile = ''
         self.rec_done_sig.emit("DONE RECORDING...")
 
@@ -164,8 +182,12 @@ class MOVRSpeechRecPlugin(Plugin):
 
     def clear_cache(self): # Function used to clear robot voice cache
         self._widget.text_logs.setPlainText("Clearing Robot and Human Cache")
-        os.system("rm -rf /home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec/robot_files/*.mp3")
-        os.system("rm -rf /home/robocup2019/movr/movr_ws/src/movr_ocs/src/rqt_movr_speech_rec/human_files/*.wav")
+        rm_rf_robot_file_cmd = "rm " + movr_ocs_pkg + "/recordings/human_files/*"
+        rm_rf_human_file_cmd = "rm  " + movr_ocs_pkg + "/recordings/robot_files/*"
+        rospy.loginfo(rm_rf_robot_file_cmd)
+        rospy.loginfo(rm_rf_human_file_cmd)
+        os.system(rm_rf_robot_file_cmd)
+        os.system(rm_rf_human_file_cmd)
         rospy.loginfo("Cleared Robot and Human Cache.")
 
     # def update_button_state(self, state):
