@@ -7,6 +7,7 @@
 - [Dependencies](#dependencies)
   - [ROS](#ros)
   - [Python](#python)
+  - [Native](#native)
 - [Installation](#installation)
 - [How to use](#how-to-use)
 - [Development](#development)
@@ -109,11 +110,55 @@ $ pip install pocketsphinx
 # https://www.pygame.org/wiki/GettingStarted
 $ pip install pygame
 ```
+
+#### playsound
+```
+# playsound
+# Pure Python, cross platform, single function module with no dependencies for playing sounds.
+# https://pypi.org/project/playsound/
+$ pip install playsound
+```
+
+#### soundevice
+**Note:** [PortAudio](#portaudio) is a dependency for the sounddevice package.
+```
+# sounddevice
+# This Python module provides bindings for the PortAudio library and a few convenience functions to play and record NumPy arrays containing audio signals.
+# https://pypi.org/project/sounddevice/
+# pip install sounddevice
+```
+
+#### soundfile
+```
+# soundfile
+# SoundFile is an audio library based on libsndfile, CFFI and NumPy
+# https://pypi.org/project/SoundFile/
+# pip install soundfile
+```
+
+#### keyboard
+```
+# keyboard
+# Take full control of your keyboard with this small Python library. 
+# Hook global events, register hotkeys, simulate key presses and much more.
+# https://pypi.org/project/keyboard/
+# pip install keyboard
+```
+
 #### json
 ```
 # json
 # JSON library
 $ pip install json
+```
+
+### Native
+
+#### PortAudio
+```
+# Ubuntu
+# PortAudio is a dependency for the Python sounddevice package
+$ sudo apt install portaudio19-dev
 ```
 
 ## Installation
