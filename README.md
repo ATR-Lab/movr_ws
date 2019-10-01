@@ -118,6 +118,15 @@ $ pip install pygame
 $ pip install playsound
 ```
 
+#### keyboard
+```
+# keyboard
+# Take full control of your keyboard with this small Python library. 
+# Hook global events, register hotkeys, simulate key presses and much more.
+# https://pypi.org/project/keyboard/
+# pip install keyboard
+```
+
 #### json
 ```
 # json
