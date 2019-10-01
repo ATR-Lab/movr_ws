@@ -1,0 +1,3 @@
+<launch>
+  <node name="movr_speak" pkg="movr_core" type="speak.py" respawn="true" />
+</launch>
