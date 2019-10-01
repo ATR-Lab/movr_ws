@@ -189,15 +189,3 @@ class MOVRSpeechRecPlugin(Plugin):
         os.system(rm_rf_robot_file_cmd)
         os.system(rm_rf_human_file_cmd)
         rospy.loginfo("Cleared Robot and Human Cache.")
-
-    # def update_button_state(self, state):
-    #     if state == True:
-    #         self._widget.btn_record.setStyleSheet(self._green_string)
-    #     else:
-    #         self._widget.btn_record.setStyleSheet(self._red_string)        
-
-    # def on_btn_state_changed(self, state):
-    #     if state == True:
-    #         self._widget.btn_record.setStyleSheet(self._green_string)
-    #     else:
-    #         self._widget.btn_record.setStyleSheet(self._red_string)
